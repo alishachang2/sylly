@@ -1,158 +1,269 @@
-/* 基础样式 */
+/* ===== BASE RESET ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 0 20px;
-    color: #333;
+  font-family: "Inter", "SF Pro Display", Arial, sans-serif;
+  color: #222;
+  background: linear-gradient(135deg, #e6f0ff, #ffe1c8);
+  min-height: 100vh;
 }
 
-h1, h2 {
-    margin: 15px 0;
-    color: #2c3e50;
+/* ===== LAYOUT ===== */
+.layout {
+  display: flex;
+  min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #4CAF50;
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 240px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 24px;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
 }
 
-/* 布局容器 */
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 40px;
 }
 
-@media (max-width: 768px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
+.menu a {
+  display: block;
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+  margin-bottom: 16px;
+  transition: color 0.25s;
 }
 
-/* 上传区域 */
-.upload-section, .events-section {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #eee;
+.menu a:hover {
+  color: #000;
 }
 
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-bottom a {
+  font-size: 14px;
+  text-decoration: none;
+  color: #666;
+}
+
+.sidebar-bottom a:hover {
+  color: #000;
+}
+
+/* ===== MAIN AREA ===== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #e6f0ff, #ffe1c8);
+  overflow-y: auto;
+}
+
+/* ===== PAGE WRAPPER ===== */
+.page-wrapper {
+  max-width: 720px;
+  margin: 80px auto 40px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  padding: 40px 50px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+/* ===== UPLOAD SECTION ===== */
 .upload-area {
-    border: 2px dashed #ccc;
-    padding: 40px 20px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.3s;
-    margin-bottom: 15px;
+  border: 2px dashed #ccc;
+  border-radius: 16px;
+  background: #fafafa;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .upload-area:hover {
-    border-color: #4CAF50;
-    background: #f0fdf4;
+  border-color: #4a90e2;
+  background: #f0f6ff;
 }
 
 .upload-area.active {
-    border-color: #4CAF50;
-    background: #e6f7ee;
+  border-color: #4a90e2;
+  background: #e6f2ff;
 }
 
 #file-input {
-    display: none;
+  display: none;
 }
 
-/* 文件信息显示 */
+/* ===== FILE INFO ===== */
 .file-info {
-    display: none;
-    padding: 15px;
-    background: #f0f0f0;
-    border-radius: 6px;
-    margin-bottom: 10px;
+  display: none;
+  background: #f7f8fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #444;
 }
 
-/* 按钮样式 */
-button {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-    transition: background 0.3s;
-}
-
-button:hover:not(:disabled) {
-    background: #3d9140;
-}
-
-button:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
+.file-info p {
+  margin-bottom: 5px;
 }
 
 #remove-file {
-    background: #f44336;
-    margin-top: 5px;
+  background: #f43f5e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 #remove-file:hover {
-    background: #d32f2f;
+  background: #e03152;
 }
 
-/* 事件列表 */
+/* ===== BUTTON ===== */
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+#extract-btn {
+  background: #000;
+  color: #fff;
+  width: 100%;
+}
+
+#extract-btn:hover:not(:disabled) {
+  background: #333;
+}
+
+#extract-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ===== EVENTS SECTION ===== */
+.events-section {
+  margin-top: 40px;
+}
+
 .events {
-    min-height: 200px;
-    padding: 15px;
-    background: #f0f0f0;
-    border-radius: 6px;
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 220px;
+}
+.events {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 220px;
+  margin-top: 16px; 
 }
 
 .event {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 4px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 .event h3 {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
 }
 
 .event-type {
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 12px;
-    color: white;
-    margin-left: 10px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  color: #fff;
 }
 
 .type-exam {
-    background: #e53e3e;
+  background: #ef4444;
 }
-
 .type-assignment {
-    background: #ed8936;
+  background: #f59e0b;
 }
-
 .type-class {
-    background: #38a169;
+  background: #22c55e;
 }
 
 .event p {
-    margin: 5px 0;
-    color: #555;
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .page-wrapper {
+    margin: 40px 20px;
+    padding: 30px 25px;
+  }
 }
