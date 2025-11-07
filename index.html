@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Extractor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Schedule Extractor</h1>
+    
+    <div class="container">
+        <div class="upload-section">
+            <h2>Upload Syllabus</h2>
+            <div class="upload-area" id="upload-area">
+                <p>Click or drag file here</p>
+                <p>Supported: PDF, DOCX, Images</p>
+                <!-- 文件选择框 - 关键元素 -->
+                <input type="file" id="file-input" accept=".pdf,.docx,.jpg,.jpeg,.png">
+            </div>
+            
+            
+            
+            <div class="file-info" id="file-info">
+                <p>File: <span id="file-name"></span></p>
+                <p>Size: <span id="file-size"></span></p>
+                <button id="remove-file">Remove</button>
+            </div>
+            
+            <button id="extract-btn" disabled>Extract Events</button>
+        </div>
+        
+        <div class="events-section">
+            <h2>Extracted Events</h2>
+            <div class="events" id="events-container">
+                <p>No events extracted yet. Upload a file and extract first.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
