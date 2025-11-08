@@ -10,7 +10,8 @@ import os
 import json
 import zipfile
 from datetime import datetime
-
+from dotenv import load_dotenv
+load_dotenv()
 from adobe.pdfservices.operation.auth.service_principal_credentials import ServicePrincipalCredentials
 from adobe.pdfservices.operation.exception.exceptions import ServiceApiException, ServiceUsageException, SdkException
 from adobe.pdfservices.operation.io.cloud_asset import CloudAsset
@@ -21,6 +22,17 @@ from adobe.pdfservices.operation.pdfjobs.jobs.extract_pdf_job import ExtractPDFJ
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_element_type import ExtractElementType
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_pdf_params import ExtractPDFParams
 from adobe.pdfservices.operation.pdfjobs.result.extract_pdf_result import ExtractPDFResult
+
+from PIL import Image
+
+#load .env 
+load_dotenv()
+CLIENT_ID = os.getenv('PDF_SERVICE_CLIENT_ID')
+CLIENT_SECRET = os.getenv('PDF_SERVICES_CLIENT_SECRET')
+#change image to pdf converter to different format
+image = Image.open("/Users/alishachang/sylly-1/uploads/690d46eb50efa.png")
+rgb_image = image.convert('RGB')
+rgb_image.save("output.pdf")
 
 zip_file = "./ExtractTextInfoFromPDF.zip"
 
@@ -39,7 +51,7 @@ credentials = ServicePrincipalCredentials(
 pdf_services = PDFServices(credentials=credentials)
 
 # Creates an asset(s) from source file(s) and upload
-input_asset = pdf_services.upload(input_stream=open("bodea-brochure.pdf", "rb"), mime_type=PDFServicesMediaType.PDF)
+input_asset = pdf_services.upload(input_stream=open("output.pdf", "rb"), mime_type=PDFServicesMediaType.PDF)
 
 # Create parameters for the job
 extract_pdf_params = ExtractPDFParams(
@@ -59,7 +71,7 @@ stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
 # Creates an output stream and copy stream asset's content to it
 #output_file_path = self.create_output_file_path()
-output_file_path = "./bodea-brochure-output.zip"
+output_file_path = "./ouput.zip"
 with open(output_file_path, "wb") as file:
     file.write(stream_asset.get_input_stream())
 
