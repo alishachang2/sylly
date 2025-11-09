@@ -17,7 +17,7 @@ This project combines automation, AI, and usability to make academic planning se
 ## How it Works
 
 1. **Upload Syllabi:** Students upload files (PDF, DOCX, or image) to the platform.  
-2. **Text Extraction:** The system extracts text and metadata from uploaded files using PyPDF2, pdfplumber, or OCR (Tesseract).  
+2. **Text Extraction:** The system extracts text and metadata from uploaded files using Adobe PDF Services.  
 3. **AI / NLP Parsing:** Extracted text is processed using AI/NLP tools (OpenAI API or spaCy + dateparser) to identify deadlines, exams, and events.  
 4. **Event Review:** Users can review parsed events before syncing.  
 5. **Calendar Sync:** Events can be synced to Google Calendar via OAuth 2.0 integration.  
