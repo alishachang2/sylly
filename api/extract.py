@@ -9,8 +9,12 @@
 import os
 import json
 import zipfile
+import dateparser
 from datetime import datetime
 from dotenv import load_dotenv
+from dateutil.parser import parse
+from ics import Calendar, Events
+
 load_dotenv()
 from adobe.pdfservices.operation.auth.service_principal_credentials import ServicePrincipalCredentials
 from adobe.pdfservices.operation.exception.exceptions import ServiceApiException, ServiceUsageException, SdkException
@@ -26,9 +30,15 @@ from adobe.pdfservices.operation.pdfjobs.result.extract_pdf_result import Extrac
 from PIL import Image
 
 #load .env 
-load_dotenv()
-CLIENT_ID = os.getenv('PDF_SERVICE_CLIENT_ID')
+load_dotenv("/Users/alishachang/sylly-1")
+CLIENT_ID = os.getenv('PDF_SERVICES_CLIENT_ID')
 CLIENT_SECRET = os.getenv('PDF_SERVICES_CLIENT_SECRET')
+ORG_ID = os.getenv("PDF_SERVICES_ORGANIZATION_ID")
+
+
+if not CLIENT_ID or not CLIENT_SECRET or not ORG_ID:
+    raise ValueError("Missing Adobe PDF Services credentials in .env")
+
 #change image to pdf converter to different format
 image = Image.open("/Users/alishachang/sylly-1/uploads/690d46eb50efa.png")
 rgb_image = image.convert('RGB')
@@ -71,16 +81,43 @@ stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
 # Creates an output stream and copy stream asset's content to it
 #output_file_path = self.create_output_file_path()
-output_file_path = "./ouput.zip"
+output_file_path = "./output.zip"
+
 with open(output_file_path, "wb") as file:
     file.write(stream_asset.get_input_stream())
 
-archive = zipfile.ZipFile(zip_file, 'r')
-jsonentry = archive.open('structuredData.json')
-jsondata = jsonentry.read()
-data = json.loads(jsondata)
+# Print absolute path to make it easy to find
+abs_path = os.path.abspath(output_file_path)
+print(f"\n Extraction complete! ZIP file saved at:\n{abs_path}\n")
 
-for element in data["elements"]:
-    if element["Path"].endswith("/H1"):
-        print(element["Text"])
+# Check that the ZIP file exists
+if not os.path.exists(output_file_path):
+    raise FileNotFoundError(f"Could not find ZIP file at {abs_path}")
 
+# Open and inspect ZIP contents
+with zipfile.ZipFile(output_file_path, 'r') as archive:
+    print("Contents of ZIP:", archive.namelist())
+    if 'structuredData.json' not in archive.namelist():
+        raise FileNotFoundError("structuredData.json not found in ZIP result.")
+
+    with archive.open('structuredData.json') as jsonentry:
+        jsondata = jsonentry.read()
+        data = json.loads(jsondata)
+
+# Parse data with dateutil, run on terminal: pip install python-dateutil
+text = data.get("elements")
+text_elements = []
+for element in data.get("elements"):
+    text_elements.append(element.get("Text", ""))
+    print(element.get("Text", ""))
+
+# Parse date information, add to a category of information? Such as test, class dates, no class, quizzes
+
+# Export to google: pip install ics
+calendar = Calendar()
+
+event = Events()
+event.name = ""
+event.begin = ""
+event.duration = ""
+event.location = ""
