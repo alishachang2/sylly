@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Events</title>
+  <!-- Use the same CSS that styles .layout, .sidebar, .events, etc -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <h1 class="logo">SYLLY</h1>
+        <nav class="menu">
+          <a href="index.html" class="menu-item">Home<sup>01</sup></a>
+          <a href="folder.html" class="menu-item">Folder<sup>02</sup></a>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <a href="#">Contact Us</a>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+      <div class="page-wrapper">
+        <h1 id="file-title" class="page-title"></h1>
+
+        <div class="events-section">
+          <h2>Parsed Events</h2>
+          <div class="events" id="events-container">
+            <p>Loading events…</p>
+          </div>
+        </div>
+
+        <a id="back-link" href="folder.html" class="back-link">← Back to subject files</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="filedetails.js"></script>
+</body>
+</html>

@@ -13,8 +13,8 @@
       <div class="sidebar-top">
         <h1 class="logo">SYLLY</h1>
         <nav class="menu">
-          <a href="#" class="menu-item">Folder<sup>01</sup></a>
-          <a href="#" class="menu-item">Settings<sup>02</sup></a>
+          <a href="index.html" class="menu-item">Home<sup>01</sup></a>
+          <a href="folder.html" class="menu-item">Folder<sup>01</sup></a>
         </nav>
       </div>
 
@@ -27,6 +27,15 @@
     <main class="main-content">
       <div class="page-wrapper">
         <h1 class="page-title">PDF to Gcal</h1>
+        <div class="subject-section">
+         <label>Choose subject:</label>
+            <select id="subject-select">
+          <option value="">-- Select subject --</option>
+           </select>
+
+          <input type="text" id="new-subject" placeholder="Or create new subject">
+        </div>
+
 
         <div class="upload-section">
           <div class="upload-area" id="upload-area">

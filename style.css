@@ -266,4 +266,28 @@ button {
     margin: 40px 20px;
     padding: 30px 25px;
   }
+
+  .calendar-actions {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-gcal-btn {
+    background: #3b82f6; /* blue */
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.add-gcal-btn:disabled {
+    background: #78a6f3;
+    cursor: default;
+}
+
+.gcal-status {
+    font-size: 14px;
+    color: #b91c1c;
+}
+
 }

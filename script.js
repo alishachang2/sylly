@@ -159,27 +159,85 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 显示提取的事件
-    function displayEvents(events) {
-        if (events.length === 0) {
-            eventsContainer.innerHTML = '<p>No events found in the file.</p>';
-            return;
-        }
-
-        let html = '';
-        events.forEach(event => {
-            html += `
-            <div class="event">
-                <h3>
-                    ${event.title}
-                    <span class="event-type type-${event.type.toLowerCase()}">${event.type}</span>
-                </h3>
-                <p>Date: ${event.date}</p>
-                <p>Time: ${event.time}</p>
-                ${event.location ? `<p>Location: ${event.location}</p>` : ''}
-            </div>
-            `;
-        });
-
-        eventsContainer.innerHTML = html;
+   function displayEvents(events) {
+    if (events.length === 0) {
+        eventsContainer.innerHTML = '<p>No events found in the file.</p>';
+        return;
     }
+
+    let html = '';
+    events.forEach(event => {
+        html += `
+        <div class="event">
+            <h3>
+                ${event.title}
+                <span class="event-type type-${event.type.toLowerCase()}">${event.type}</span>
+            </h3>
+            <p>Date: ${event.date}</p>
+            <p>Time: ${event.time}</p>
+            ${event.location ? `<p>Location: ${event.location}</p>` : ''}
+            <div class="calendar-actions">
+                <button class="add-gcal-btn" data-id="${event.id}">
+                    Add to Google Calendar
+                </button>
+            </div>
+        </div>`;
+    });
+
+    // Insert HTML first
+    eventsContainer.innerHTML = html;
+
+    // THEN attach listeners
+    document.querySelectorAll('.add-gcal-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.disabled = true;
+            this.textContent = "Added ✔️";
+        });
+    });
+}
+function loadSubjects() {
+    const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+    const select = document.getElementById("subject-select");
+
+    select.innerHTML = `<option value="">-- Select subject --</option>`;
+    subjects.forEach(s => {
+        select.innerHTML += `<option value="${s}">${s}</option>`;
+    });
+}
+loadSubjects();
+document.getElementById("extract-btn").addEventListener("click", () => {
+    let subject = document.getElementById("subject-select").value;
+    const newSub = document.getElementById("new-subject").value.trim();
+
+    if (newSub) {
+        subject = newSub;
+
+        // Save new subject
+        const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+        if (!subjects.includes(newSub)) {
+            subjects.push(newSub);
+            localStorage.setItem("subjects", JSON.stringify(subjects));
+        }
+    }
+
+    if (!subject) {
+        alert("Pick or create a subject before uploading.");
+        return;
+    }
+
+    saveFileToFolder(fileInput.files[0], subject);
+});
+function saveFileToFolder(file, subject) {
+    const stored = JSON.parse(localStorage.getItem("uploads")) || [];
+
+    stored.push({
+        name: file.name,
+        size: file.size,
+        subject: subject,
+        date: new Date().toISOString()
+    });
+
+    localStorage.setItem("uploads", JSON.stringify(stored));
+}
+
 });
