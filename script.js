@@ -123,6 +123,37 @@ document.addEventListener('DOMContentLoaded', function() {
         extractBtn.addEventListener('click', () => {
             if (!selectedFile) return;
 
+            // Ensure a subject is selected or a new one entered
+            const subjectSelect = document.getElementById('subject-select');
+            const newSubInput = document.getElementById('new-subject');
+            let subject = '';
+
+            if (newSubInput && newSubInput.value.trim()) {
+                subject = newSubInput.value.trim();
+                // Save new subject if not present
+                const subjects = JSON.parse(localStorage.getItem('subjects')) || [];
+                if (!subjects.includes(subject)) {
+                    subjects.push(subject);
+                    localStorage.setItem('subjects', JSON.stringify(subjects));
+                    // repopulate select if present
+                    if (subjectSelect) {
+                        const opt = document.createElement('option');
+                        opt.value = subject;
+                        opt.textContent = subject;
+                        subjectSelect.appendChild(opt);
+                    }
+                }
+            } else if (subjectSelect) {
+                subject = subjectSelect.value;
+            }
+
+            if (!subject) {
+                alert('Pick or create a subject before uploading.');
+                return;
+            }
+
+            // We'll save server-side URL info after a successful upload.
+
             extractBtn.disabled = true;
             extractBtn.textContent = 'Extracting...';
             eventsContainer.innerHTML = '<p>Processing file...</p>';
@@ -143,6 +174,11 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 if (data.status === 'success') {
+                    // Save the upload metadata including the server URL returned by PHP
+                    const savedUrl = data.url || null;
+                    const savedName = data.saved_name || null;
+                    saveFileToFolder(selectedFile, subject, savedName, savedUrl);
+
                     displayEvents(data.events);
                 } else {
                     eventsContainer.innerHTML = `<p>Error: ${data.message}</p>`;
@@ -205,39 +241,24 @@ function loadSubjects() {
     });
 }
 loadSubjects();
-document.getElementById("extract-btn").addEventListener("click", () => {
-    let subject = document.getElementById("subject-select").value;
-    const newSub = document.getElementById("new-subject").value.trim();
-
-    if (newSub) {
-        subject = newSub;
-
-        // Save new subject
-        const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
-        if (!subjects.includes(newSub)) {
-            subjects.push(newSub);
-            localStorage.setItem("subjects", JSON.stringify(subjects));
-        }
-    }
-
-    if (!subject) {
-        alert("Pick or create a subject before uploading.");
-        return;
-    }
-
-    saveFileToFolder(fileInput.files[0], subject);
-});
-function saveFileToFolder(file, subject) {
+function saveFileToFolder(file, subject, savedName = null, url = null) {
     const stored = JSON.parse(localStorage.getItem("uploads")) || [];
 
-    stored.push({
+    const entry = {
         name: file.name,
         size: file.size,
         subject: subject,
         date: new Date().toISOString()
-    });
+    };
+
+    if (savedName) entry.saved_name = savedName;
+    if (url) entry.url = url;
+
+    stored.push(entry);
 
     localStorage.setItem("uploads", JSON.stringify(stored));
+
+    return entry;
 }
 
 });

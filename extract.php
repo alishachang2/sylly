@@ -96,6 +96,9 @@ $events = [
 // 返回提取的事件
 echo json_encode([
     'status' => 'success',
-    'events' => $events
+    'events' => $events,
+    // include the saved filename and public URL so the client can show previews
+    'saved_name' => $fileName,
+    'url' => 'uploads/' . $fileName
 ]);
 ?>
