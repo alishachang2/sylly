@@ -13,12 +13,29 @@ Students can review extracted events before syncing them to their Google Calenda
 This project combines automation, AI, and usability to make academic planning seamless for students.
 
 ---
+## Tech Stack
+Programming Languages
+1. Javascript
+2. Python
+3. HTML
+
+Framework and Libraries
+1. Flask
 
 ## How it Works
 
 1. **Upload Syllabi:** Students upload files (PDF, DOCX, or image) to the platform.  
 2. **Text Extraction:** The system extracts text and metadata from uploaded files using Adobe PDF Services.  
-3. **AI / NLP Parsing:** Extracted text is processed using AI/NLP tools (OpenAI API or spaCy + dateparser) to identify deadlines, exams, and events.  
+3. **AI / NLP Parsing:** Extracted text is processed using AI/NLP tools (cohene) to identify deadlines, exams, and events.  
 4. **Event Review:** Users can review parsed events before syncing.  
 5. **Calendar Sync:** Events can be synced to Google Calendar via OAuth 2.0 integration.  
-6. **Customization:** Users can set reminders, color-code events, and customize the interface.  
+6. **Customization:** Users can set reminders, color-code events, and customize the interface.
+
+## Setup
+1. Create API key for AdobePDF and API key for Cohere (free version available for both)
+
+## Challenges and Solutions
+
+## Demo
+
+   
