@@ -12,8 +12,7 @@ import zipfile
 import dateparser
 from datetime import datetime
 from dotenv import load_dotenv
-from dateutil.parser import parse
-from ics import Calendar, Events
+from dateutil.parser import parse, parser, _timelex
 
 load_dotenv()
 from adobe.pdfservices.operation.auth.service_principal_credentials import ServicePrincipalCredentials
@@ -39,7 +38,7 @@ ORG_ID = os.getenv("PDF_SERVICES_ORGANIZATION_ID")
 if not CLIENT_ID or not CLIENT_SECRET or not ORG_ID:
     raise ValueError("Missing Adobe PDF Services credentials in .env")
 
-#change image to pdf converter to different format
+#change image to pdf converter to different format, change to check format
 image = Image.open("/Users/alishachang/sylly-1/uploads/690d46eb50efa.png")
 rgb_image = image.convert('RGB')
 rgb_image.save("output.pdf")
@@ -61,7 +60,7 @@ credentials = ServicePrincipalCredentials(
 pdf_services = PDFServices(credentials=credentials)
 
 # Creates an asset(s) from source file(s) and upload
-input_asset = pdf_services.upload(input_stream=open("output.pdf", "rb"), mime_type=PDFServicesMediaType.PDF)
+input_asset = pdf_services.upload(input_stream=open("/Users/alishachang/sylly-1/api/Syllabus2025 (1).pdf", "rb"), mime_type=PDFServicesMediaType.PDF)
 
 # Create parameters for the job
 extract_pdf_params = ExtractPDFParams(
@@ -103,6 +102,7 @@ with zipfile.ZipFile(output_file_path, 'r') as archive:
     with archive.open('structuredData.json') as jsonentry:
         jsondata = jsonentry.read()
         data = json.loads(jsondata)
+        text_content = data.get('full-text', '')
 
 # Parse data with dateutil, run on terminal: pip install python-dateutil
 text = data.get("elements")
@@ -111,13 +111,4 @@ for element in data.get("elements"):
     text_elements.append(element.get("Text", ""))
     print(element.get("Text", ""))
 
-# Parse date information, add to a category of information? Such as test, class dates, no class, quizzes
-
-# Export to google: pip install ics
-calendar = Calendar()
-
-event = Events()
-event.name = ""
-event.begin = ""
-event.duration = ""
-event.location = ""
+fulltext = "/n".join(text_elements)
