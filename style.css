@@ -124,6 +124,60 @@ body {
   display: none;
 }
 
+/* Homepage: subject + upload layout (subject-section kept from the new UI) */
+.subject-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.subject-section label {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #374151;
+}
+
+#subject-select, #new-subject {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e9f2;
+  background: #fff;
+  font-size: 14px;
+  color: #111827;
+}
+
+#new-subject {
+  flex: 1 1 auto;
+}
+
+/* keep file-info display behavior consistent with original styles */
+.file-info {
+  display: none;
+  background: #f7f8fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* extract button back to original simple black style */
+#extract-btn {
+  background: #000;
+  color: #fff;
+  width: 100%;
+}
+
+#extract-btn:hover:not(:disabled) {
+  background: #333;
+}
+
+#extract-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
 /* ===== FILE INFO ===== */
 .file-info {
   display: none;
@@ -183,7 +237,6 @@ button {
 .events-section {
   margin-top: 40px;
 }
-
 .events {
   background: #f8f8f8;
   border-radius: 12px;
@@ -196,6 +249,86 @@ button {
   padding: 20px;
   min-height: 220px;
   margin-top: 16px; 
+}
+
+/* ===== FILE ENTRY / PREVIEW (subjectfolder) ===== */
+.file-entry {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.file-entry:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(12, 24, 48, 0.06);
+}
+
+.file-preview {
+  flex: 0 0 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f8fafc, #eef2ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #111827;
+  border: 1px solid #e6e9f2;
+  box-shadow: 0 4px 10px rgba(16,24,40,0.04);
+}
+
+.file-meta {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.file-meta .file-name {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.file-actions .btn {
+  display: inline-block;
+  background: #2563eb; /* blue-600 */
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(37,99,235,0.12);
+}
+
+.file-actions .btn:hover {
+  background: #1d4ed8; /* blue-700 */
+  transform: translateY(-1px);
+}
+
+.view-file-link {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .file-entry { flex-direction: column; align-items: flex-start; }
+  .file-preview { width: 100%; }
+  .file-preview img { max-width: 100%; height: auto; }
+  .file-actions .btn { width: 100%; text-align: center; }
 }
 
 .event {
