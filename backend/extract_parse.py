@@ -88,10 +88,6 @@ def extract_events_n_dates(fulltext: str):
 
 #function to convert events to ics
 def events_to_ics(events):
-    """
-    events: list[{"event": str, "date": "YYYYMMDD"}]
-    Returns a VCALENDAR string with all-day VEVENTs.
-    """
     now_utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
     lines = [
@@ -161,7 +157,6 @@ def extract_pdf(filename: str):
     ics = fulltext_to_ics(fulltext_string)
 
     return {
-        "fulltext_list": fulltext_list,
         "fulltext_string": fulltext_string,
         "events": events,
         "ics": ics
