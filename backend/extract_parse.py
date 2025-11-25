@@ -34,13 +34,7 @@ co = cohere.ClientV2(api_key=os.getenv("CO_API_KEY"))
 
 #function that calls cohere to extract events
 def extract_events_n_dates(fulltext: str):
-    """
-    Use Cohere to extract events and dates from a syllabus.
-
-    Returns:
-        List[{"event": str, "date": "YYYYMMDD"}]
-    """
-
+    
     instructions = (
         "You are a parser. Given a course syllabus, extract all important dated events.\n"
         "- First, identify all dates in the text.\n"
