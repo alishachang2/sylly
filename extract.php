@@ -68,37 +68,51 @@ if (!move_uploaded_file($file['tmp_name'], $destination)) {
     exit;
 }
 
-// 模拟提取的事件数据（实际应用中需要替换为真实的文本提取逻辑）
-$events = [
-    [
-        'title' => 'Midterm Exam',
-        'type' => 'Exam',
-        'date' => '2023-11-15',
-        'time' => '14:00 - 16:00',
-        'location' => 'Classroom 302'
-    ],
-    [
-        'title' => 'Programming Assignment',
-        'type' => 'Assignment',
-        'date' => '2023-11-20',
-        'time' => '23:59 Deadline',
-        'location' => 'Online Submission'
-    ],
-    [
-        'title' => 'Data Structures Lecture',
-        'type' => 'Class',
-        'date' => 'Every Monday, Wednesday',
-        'time' => '09:00 - 10:30',
-        'location' => 'Hall A'
-    ]
-];
-
-// 返回提取的事件
-echo json_encode([
-    'status' => 'success',
-    'events' => $events,
-    // include the saved filename and public URL so the client can show previews
-    'saved_name' => $fileName,
-    'url' => 'uploads/' . $fileName
-]);
+try {
+    // 调用Python脚本进行文本提取
+    $pythonScript = 'run_extract.py';
+    
+    // 检查Python脚本是否存在
+    if (!file_exists($pythonScript)) {
+        throw new Exception('Python extraction script not found');
+    }
+    
+    // 构建命令 - 使用escapeshellarg确保安全
+    $command = 'python3 ' . escapeshellarg($pythonScript) . ' ' . escapeshellarg($destination);
+    
+    // 执行Python脚本
+    $output = shell_exec($command . ' 2>&1');
+    
+    if ($output === null) {
+        throw new Exception('Failed to execute Python script');
+    }
+    
+    // 解析Python脚本的输出
+    $result = json_decode($output, true);
+    
+    if ($result === null) {
+        throw new Exception('Invalid JSON response from Python script: ' . $output);
+    }
+    
+    // 检查Python脚本是否返回错误
+    if (isset($result['error'])) {
+        throw new Exception('Python script error: ' . $result['error']);
+    }
+    
+    // 返回成功结果
+    echo json_encode([
+        'status' => 'success',
+        'events' => $result, // 使用Python脚本返回的数据
+        'saved_name' => $fileName,
+        'url' => 'uploads/' . $fileName,
+        'debug' => $output // 调试信息，生产环境中应移除
+    ]);
+    
+} catch (Exception $e) {
+    // 返回错误信息
+    echo json_encode([
+        'status' => 'error', 
+        'message' => 'Extraction failed: ' . $e->getMessage()
+    ]);
+}
 ?>
