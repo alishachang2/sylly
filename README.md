@@ -32,10 +32,25 @@ Framework and Libraries
 6. **Customization:** Users can set reminders, color-code events, and customize the interface.
 
 ## Setup
-1. Create API key for AdobePDF and API key for Cohere (free version available for both)
+# 1. Clone repo
+git clone https://github.com/alishachang2/sylly.git
+cd sylly
+
+# 2. Backend setup
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt
+
+# 3. Environment variables
+cp .env.example .env  # then fill in API keys for Adobe, Cohere, Google OAuth
+
+# 4. Start backend server
+python backend/main.py    # or flask/fastapi command once you refactor
+
+# 5. Start PHP server (if you keep PHP)
+php -S localhost:8000
 
 ## Challenges and Solutions
 
-## Demo
 
    
