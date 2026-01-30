@@ -20,6 +20,7 @@ Programming Languages
 1. Javascript
 2. Python
 3. HTML
+4. CSS
 
 Framework and Libraries
 1. PHP
