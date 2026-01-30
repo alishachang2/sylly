@@ -1,58 +1,86 @@
+Here is a tightened, professional README-ready version:
+
+---
+
 # Sylly
 
-**Sylly** is a web application designed to help students convert their syllabus documents into Google Calendar events, making semester planning faster, easier, and more organized.
+**Sylly** is a web application that converts syllabus documents into structured Google Calendar events, helping students plan their semester quickly and efficiently.
 
-MVP Video Link: https://youtu.be/FGe2av2HzeY
+MVP Video: [https://youtu.be/FGe2av2HzeY](https://youtu.be/FGe2av2HzeY)
+
+---
+
+## Overview
+
+Sylly lets students upload syllabi in PDF, DOCX, or image formats. Using text extraction and AI/NLP, the system identifies key academic information—deadlines, exams, class sessions, and more. Students can review and edit extracted events before exporting them to Google Calendar. Optional reminders, color-coded categories, and interface customization improve clarity and usability.
 
 ---
 
-## Project Description
-
-Sylly allows students to upload their syllabi in PDF format. The system extracts key information such as deadlines, class schedules, and exam dates using AI and text extraction tools.  
-
-Students can review extracted events before syncing them to their Google Calendar. Optional reminders and color-coded events help students efficiently track their semester. Users can also customize the interface for a more personalized experience.  
-
-This project combines automation, AI, and usability to make academic planning seamless for students.
-
----
 ## Tech Stack
-Programming Languages
-1. Javascript
-2. Python
-3. HTML
-4. CSS
 
-Framework and Libraries
-1. PHP
+**Languages**
 
-## How it Works
+* JavaScript
+* Python
+* HTML
+* CSS
 
-1. **Upload Syllabi:** Students upload files (PDF, DOCX, or image) to the platform.  
-2. **Text Extraction:** The system extracts text and metadata from uploaded files using Adobe PDF Services.  
-3. **AI / NLP Parsing:** Extracted text is processed using AI/NLP tools (cohene) to identify deadlines, exams, and events.  
-4. **Event Review:** Users can review parsed events before syncing.  
-5. **Calendar Sync:** Events can be synced to Google Calendar via ics file.
+**Frameworks / Libraries**
+
+* PHP
+
+---
+
+## How It Works
+
+1. **Upload Syllabi:** Users upload PDF, DOCX, or image files.
+2. **Text Extraction:** Adobe PDF Services extracts text and metadata.
+3. **AI Parsing:** Cohere processes extracted text to identify events.
+4. **Review:** Users verify and edit parsed events.
+5. **Sync:** Events are exported to Google Calendar via an `.ics` file.
+
+---
 
 ## Setup
-### 1. Clone repo
+
+### 1. Clone the repository
+
+```
 git clone https://github.com/alishachang2/sylly.git
 cd sylly
+```
 
 ### 2. Backend setup
+
+```
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+source venv/bin/activate    # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
+```
 
 ### 3. Environment variables
-cp .env.example .env  # then fill in API keys for Adobe, Cohere
-1. https://docs.cohere.com/reference/about
-2. https://developer.adobe.com/document-services/apis/pdf-extract/
 
-### 4. Start backend server
-python backend/main.py    # or flask/fastapi command once you refactor
+```
+cp .env.example .env
+```
 
-### 5. Start PHP server 
+Fill in your Adobe and Cohere API keys.
+
+Documentation:
+
+* Cohere: [https://docs.cohere.com/reference/about](https://docs.cohere.com/reference/about)
+* Adobe PDF Extract: [https://developer.adobe.com/document-services/apis/pdf-extract/](https://developer.adobe.com/document-services/apis/pdf-extract/)
+
+### 4. Start the backend
+
+```
+python backend/main.py
+```
+
+### 5. Start the PHP server
+
+```
 php -S localhost:8000
+```
 
 
-   
