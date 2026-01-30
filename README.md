@@ -31,8 +31,7 @@ Framework and Libraries
 2. **Text Extraction:** The system extracts text and metadata from uploaded files using Adobe PDF Services.  
 3. **AI / NLP Parsing:** Extracted text is processed using AI/NLP tools (cohene) to identify deadlines, exams, and events.  
 4. **Event Review:** Users can review parsed events before syncing.  
-5. **Calendar Sync:** Events can be synced to Google Calendar via OAuth 2.0 integration.  
-6. **Customization:** Users can set reminders, color-code events, and customize the interface.
+5. **Calendar Sync:** Events can be synced to Google Calendar via ics file.
 
 ## Setup
 ### 1. Clone repo
@@ -45,7 +44,7 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
 ### 3. Environment variables
-cp .env.example .env  # then fill in API keys for Adobe, Cohere, Google OAuth
+cp .env.example .env  # then fill in API keys for Adobe, Cohere
 
 ### 4. Start backend server
 python backend/main.py    # or flask/fastapi command once you refactor
