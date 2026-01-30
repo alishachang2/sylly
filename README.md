@@ -8,7 +8,7 @@ MVP Video Link: https://youtu.be/FGe2av2HzeY
 
 ## Project Description
 
-Sylly allows students to upload their syllabi in PDF, DOCX, or image formats. The system extracts key information such as deadlines, class schedules, and exam dates using AI and text extraction tools.  
+Sylly allows students to upload their syllabi in PDF format. The system extracts key information such as deadlines, class schedules, and exam dates using AI and text extraction tools.  
 
 Students can review extracted events before syncing them to their Google Calendar. Optional reminders and color-coded events help students efficiently track their semester. Users can also customize the interface for a more personalized experience.  
 
@@ -49,10 +49,8 @@ cp .env.example .env  # then fill in API keys for Adobe, Cohere
 ### 4. Start backend server
 python backend/main.py    # or flask/fastapi command once you refactor
 
-### 5. Start PHP server (if you keep PHP)
+### 5. Start PHP server 
 php -S localhost:8000
-
-## Challenges and Solutions
 
 
    
