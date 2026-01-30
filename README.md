@@ -45,8 +45,8 @@ pip install -r requirements.txt
 
 ### 3. Environment variables
 cp .env.example .env  # then fill in API keys for Adobe, Cohere
-** https://docs.cohere.com/reference/about
-** https://developer.adobe.com/document-services/apis/pdf-extract/
+a. **https://docs.cohere.com/reference/about
+b. **https://developer.adobe.com/document-services/apis/pdf-extract/
 
 ### 4. Start backend server
 python backend/main.py    # or flask/fastapi command once you refactor
