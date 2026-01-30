@@ -3,6 +3,7 @@
 **Sylly** is a web application designed to help students convert their syllabus documents into Google Calendar events, making semester planning faster, easier, and more organized.
 
 MVP Video Link: https://youtu.be/FGe2av2HzeY
+
 ---
 
 ## Project Description
