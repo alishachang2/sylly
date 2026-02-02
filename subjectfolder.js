@@ -1,55 +1,62 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const parseBtn = document.getElementById('parseBtn');
+    const fileInput = document.getElementById('fileInput');
+    const statusMsg = document.getElementById('statusMessage');
 
-document.addEventListener("DOMContentLoaded", () => {
-  const titleEl = document.getElementById("folder-title");
-  const listEl = document.getElementById("file-list");
+    parseBtn.addEventListener('click', async (e) => {
+        // 1. STOP the page from reloading
+        e.preventDefault();
 
-  const params = new URLSearchParams(window.location.search);
-  const subject = decodeURIComponent(params.get("subject") || "");
+        // 2. Check if file is selected
+        if (!fileInput.files.length) {
+            statusMsg.textContent = "Please select a file first.";
+            statusMsg.style.color = "red";
+            return;
+        }
 
-  const uploads = JSON.parse(localStorage.getItem("uploads")) || [];
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file); // Must match $_FILES['file'] in PHP
 
-  if (!subject) {
-    titleEl.textContent = "No folder selected";
-    listEl.innerHTML = "<li>Missing subject in URL.</li>";
-    return;
-  }
+        statusMsg.textContent = "Uploading and Parsing... (This may take 30+ seconds)";
+        statusMsg.style.color = "blue";
+        parseBtn.disabled = true; // Disable button so they don't click twice
 
-  titleEl.textContent = `${subject} – files`;
+        try {
+            // 3. Send to PHP
+            const response = await fetch('extract.php', {
+                method: 'POST',
+                body: formData
+            });
 
-  const files = uploads.filter(u => u.subject === subject);
+            // 4. Handle "No Response" or "Server Error"
+            if (!response.ok) {
+                throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+            }
 
-  if (files.length === 0) {
-    listEl.innerHTML = "<li>No files uploaded</li>";
-  } else {
-    listEl.innerHTML = files
-      .map(f => {
-        const encodedFile = encodeURIComponent(f.name);
-        const encodedSubject = encodeURIComponent(subject);
+            // 5. Read JSON
+            const result = await response.json();
 
-        // Render a compact extension badge (no image thumbnails)
-        const nameToInspect = f.name || (f.saved_name || 'file');
-        const parts = nameToInspect.split('.');
-        const ext = parts.length > 1 ? parts[parts.length - 1].toUpperCase() : '';
-        const badge = ext ? ext : 'FILE';
-        const previewHtml = `
-          <div class="file-icon">${badge}</div>
-        `;
+            if (result.status === 'success') {
+                statusMsg.textContent = "Success! Events extracted.";
+                statusMsg.style.color = "green";
+                console.log("Events:", result.events);
+                
+                // OPTIONAL: Redirect to calendar page or show events
+                // window.location.href = 'calendar.html';
+            } else {
+                // Show the error from PHP/Python
+                statusMsg.textContent = "Error: " + (result.message || "Unknown error");
+                statusMsg.style.color = "red";
+                console.error("Debug Raw:", result.raw_output || result);
+            }
 
-        return `
-          <li class="file-item">
-            <div class="file-entry">
-              <div class="file-preview">${previewHtml}</div>
-              <div class="file-meta">
-                <div>${f.name} (${Math.round(f.size / 1024)} KB)</div>
-                <div class="file-actions" style="margin-top:6px;">
-                  <a class="btn" href="filedetails.html?subject=${encodedSubject}&file=${encodedFile}">View Events</a>
-                  ${f.url ? `<a class="btn" href="${f.url}" target="_blank" rel="noopener" style="margin-left:8px;">View File</a>` : ''}
-                </div>
-              </div>
-            </div>
-          </li>
-        `;
-      })
-      .join("");
-  }
+        } catch (error) {
+            statusMsg.textContent = "Request Failed: " + error.message;
+            statusMsg.style.color = "red";
+            console.error("Fetch error:", error);
+        } finally {
+            parseBtn.disabled = false; // Re-enable button
+        }
+    });
 });

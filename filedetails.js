@@ -1,4 +1,4 @@
-// --- DISPLAY EVENTS (ALL BUTTONS DOWNLOAD MASTER FILE) ---
+//Display all events
     function displayEvents(events, icsUrl) {
         if (events.length === 0) {
             eventsContainer.innerHTML = '<p>No events found.</p>';
@@ -7,8 +7,7 @@
 
         let html = '';
 
-        // OPTIONAL: Keep the big button at the top if you want it, 
-        // otherwise delete this "if (icsUrl) { ... }" block.
+
         if (icsUrl) {
              html += `
             <div style="margin-bottom: 20px; text-align: center;">
@@ -18,12 +17,8 @@
             </div>`;
         }
 
-        // Loop through events
+        //iterate through each event
         events.forEach(event => {
-            
-            // We ignore specific dates here because we are just linking 
-            // to the master file that already has everything.
-            
             html += `
             <div class="event">
                 <h3>${event.title} <span class="event-type type-${(event.type || 'general').toLowerCase()}">${event.type}</span></h3>

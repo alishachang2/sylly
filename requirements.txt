@@ -1,4 +1,3 @@
-accelerate==1.11.0
 alabaster==1.0.0
 annotated-types==0.7.0
 anyio==4.11.0
@@ -15,16 +14,12 @@ defusedxml==0.7.1
 distlib==0.4.0
 distro==1.9.0
 docutils==0.21.2
-fastavro==1.12.1
-filelock==3.20.0
 Flask==3.1.2
 fsspec==2025.10.0
 h11==0.16.0
-hf-xet==1.2.0
 httpcore==1.0.9
 httpx==0.28.1
 httpx-sse==0.4.0
-huggingface_hub==1.1.4
 ics==0.7.2
 idna==3.11
 imagesize==1.4.1
@@ -34,14 +29,10 @@ jiter==0.12.0
 markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 mdurl==0.1.2
-mpmath==1.3.0
-networkx==3.5
-numpy==2.3.4
 packaging==25.0
 pdfservices-sdk==4.2.0
 pillow==12.0.0
 platformdirs==4.5.0
-psutil==7.1.3
 pydantic==2.12.4
 pydantic_core==2.41.5
 Pygments==2.19.2
@@ -51,9 +42,6 @@ pytz==2025.2
 PyYAML==6.0.3
 regex==2025.11.3
 requests==2.32.5
-rich==14.2.0
-safetensors==0.6.2
-sentencepiece==0.2.1
 setuptools==80.9.0
 shellingham==1.5.4
 six==1.17.0
@@ -68,13 +56,9 @@ sphinxcontrib-jquery==4.1
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
-sympy==1.14.0
 TatSu==5.13.2
-tokenizers==0.22.1
 torch==2.9.1
 torchvision==0.24.1
-tqdm==4.67.1
-transformers @ git+https://github.com/huggingface/transformers@66d57110f089789ae285cc9d54d3bf051123246b
 typer-slim==0.20.0
 types-requests==2.32.4.20250913
 typing-inspection==0.4.2
