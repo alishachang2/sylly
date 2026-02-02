@@ -1,66 +1,51 @@
-// filedetails.js
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const subject = decodeURIComponent(params.get("subject") || "");
-  const file = decodeURIComponent(params.get("file") || "");
+// --- DISPLAY EVENTS (ALL BUTTONS DOWNLOAD MASTER FILE) ---
+    function displayEvents(events, icsUrl) {
+        if (events.length === 0) {
+            eventsContainer.innerHTML = '<p>No events found.</p>';
+            return;
+        }
 
-  const titleEl = document.getElementById("file-title");
-  const eventsContainer = document.getElementById("events-container");
-  const backLink = document.getElementById("back-link");
+        let html = '';
 
-  if (!file) {
-    titleEl.textContent = "No file selected";
-    eventsContainer.innerHTML = "<p>No file info provided in URL.</p>";
-    return;
-  }
+        // OPTIONAL: Keep the big button at the top if you want it, 
+        // otherwise delete this "if (icsUrl) { ... }" block.
+        if (icsUrl) {
+             html += `
+            <div style="margin-bottom: 20px; text-align: center;">
+                <p style="font-size: 14px; color: #666;">
+                    (Click any button below to download the full schedule)
+                </p>
+            </div>`;
+        }
 
-  titleEl.textContent = `${file} – Parsed Events`;
+        // Loop through events
+        events.forEach(event => {
+            
+            // We ignore specific dates here because we are just linking 
+            // to the master file that already has everything.
+            
+            html += `
+            <div class="event">
+                <h3>${event.title} <span class="event-type type-${(event.type || 'general').toLowerCase()}">${event.type}</span></h3>
+                <p>Date: ${event.date}</p>
+                <p>Time: ${event.time}</p>
+                
+                <div class="calendar-actions">
+                    <a href="${icsUrl}" download="syllabus.ics" style="
+                        display: inline-block;
+                        text-decoration: none;
+                        background-color: #007bff;
+                        color: white;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        font-family: sans-serif;
+                        cursor: pointer;">
+                        Add to Google Calendar
+                    </a>
+                </div>
+            </div>`;
+        });
 
-  // 🔮 Mock parsed event data – replace with real parsing later
-  const parsedEvents = [
-    {
-      title: "Lecture 1: Introduction to Algorithms",
-      date: "2025-02-03",
-      time: "10:00–11:15 AM",
-      location: "Room 302",
-      note: "Bring printed syllabus."
-    },
-    {
-      title: "Homework 1 Due",
-      date: "2025-02-07",
-      time: "11:59 PM",
-      location: "Canvas",
-      note: "Covers Chapters 1–2."
-    },
-    {
-      title: "Midterm Exam",
-      date: "2025-03-01",
-      time: "2:00–3:30 PM",
-      location: "Main Hall 101",
-      note: "Closed-book, calculators allowed."
+        eventsContainer.innerHTML = html;
     }
-  ];
-
-  if (!parsedEvents.length) {
-    eventsContainer.innerHTML = "<p>No events parsed from this file.</p>";
-  } else {
-    eventsContainer.innerHTML = parsedEvents
-      .map(ev => `
-        <div class="event-item">
-          <h3>${ev.title}</h3>
-          <p><strong>Date:</strong> ${ev.date}</p>
-          <p><strong>Time:</strong> ${ev.time}</p>
-          <p><strong>Location:</strong> ${ev.location}</p>
-          <p>${ev.note}</p>
-        </div>
-      `)
-      .join("");
-  }
-
-  // Back link → go back to that subject's file list
-  if (subject) {
-    backLink.href = `subjectfolder.html?subject=${encodeURIComponent(subject)}`;
-  } else {
-    backLink.href = "folder.html";
-  }
-});
