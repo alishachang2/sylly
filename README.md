@@ -1,4 +1,3 @@
-Here is a tightened, professional README-ready version:
 
 ---
 
